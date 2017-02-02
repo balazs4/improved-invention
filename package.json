@@ -5,6 +5,10 @@
   "repository": "https://github.com/balazs4/improved-invention.git",
   "author": "balazs4 <balazs4web@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "webpack -w",
+    "build": "webpack -p"
+  },
   "devDependencies": {
     "webpack": "^2.2.1",
     "webpack-dev-server": "^1.16.3"
