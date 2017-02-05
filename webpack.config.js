@@ -3,6 +3,7 @@ const {resolve} = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const FrienlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 
 module.exports = {
@@ -35,6 +36,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
+        new FrienlyErrorsWebpackPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: mod => mod.context && mod.context.indexOf('node_modules') !== -1
@@ -48,6 +50,7 @@ module.exports = {
     ],
     devtool: 'inline-source-map',
     devServer: {
+        quiet: true,
         hot: true,
         port: 3000,
         contentBase: resolve(__dirname, 'dist')
