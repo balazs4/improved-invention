@@ -2,6 +2,8 @@ const {resolve} = require('path');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+
 
 module.exports = {
     entry: [
@@ -32,15 +34,17 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),        
+        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: mod => mod.context && mod.context.indexOf('node_modules') !== -1
         }),
         new HtmlWebpackPlugin({
             inject: 'body',
-            template: resolve(__dirname, 'src', 'index.html')
+            template: resolve(__dirname, 'src', 'index.html'),
+            title: require('./package.json').name,
         }),
+        new FaviconsWebpackPlugin(resolve(__dirname, 'src', 'logo.png'))
     ],
     devtool: 'inline-source-map',
     devServer: {
