@@ -104,4 +104,4 @@ const mode = {
     }
 }
 
-module.exports = merge.smart(app, mode[process.env.NODE_ENV || 'development']);
+module.exports = merge.smart(mode[process.env.NODE_ENV || 'development'], app);
