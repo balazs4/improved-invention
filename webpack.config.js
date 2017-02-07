@@ -39,7 +39,13 @@ const app = {
             template: resolve(__dirname, 'src', 'index.html'),
             title: require('./package.json').name,
         }),
-    ]
+    ],
+    resolve: {
+        alias: {
+            'react' : 'preact-compat/dist/preact-compat',
+            'react-dom' : 'preact-compat/dist/preact-compat'
+        }
+    }
 }
 
 const mode = {
