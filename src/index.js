@@ -3,7 +3,7 @@ import { h, render } from 'preact';
 let root;
 const load = () => {
     const App = require('./App').default;
-    root = render(<App />, document.body, root);
+    root = render(<App />, document.getElementById('app'), root);
 }
 
 load();
