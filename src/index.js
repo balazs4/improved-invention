@@ -1,18 +1,14 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
+import { h, render } from 'preact';
 
-import App from './App';
-
-const _render = MyApp => {
-    render(
-        <AppContainer>
-            <MyApp />
-        </AppContainer>,
-        document.getElementById('app')
-    )
+let root;
+const load = () => {
+    const App = require('./App').default;
+    root = render(<App />, document.body, root);
 }
 
-_render(App);
-
-if (module.hot) module.hot.accept('./App', () => { _render(App); })
+load();
+if (module.hot) {
+    require('preact/devtools');
+    module.hot.accept();
+    module.hot.accept('./App', load)
+}

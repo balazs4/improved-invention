@@ -21,8 +21,8 @@ const app = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: [['es2015', { modules: false }], 'stage-2', 'react'],
-                        plugins: ['react-hot-loader/babel']
+                        presets: [['latest', { modules: false }]],
+                        plugins: [['transform-react-jsx', { pragma: 'h' }]]
                     }
                 }
             }
@@ -39,19 +39,12 @@ const app = {
             template: resolve(__dirname, 'src', 'index.html'),
             title: require('./package.json').name,
         }),
-    ],
-    resolve: {
-        alias: {
-            'react' : 'preact-compat/dist/preact-compat',
-            'react-dom' : 'preact-compat/dist/preact-compat'
-        }
-    }
+    ]
 }
 
 const mode = {
     development: {
         entry: [
-            'react-hot-loader/patch',
             'webpack-dev-server/client?http://localhost:3000',
             'webpack/hot/only-dev-server'
         ],
