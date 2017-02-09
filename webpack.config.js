@@ -5,7 +5,6 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 const app = {
@@ -21,7 +20,7 @@ const app = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: [['es2015', { modules: false }], 'stage-2', 'react'],
+                        presets: [['latest', { modules: false }],'react'],
                         plugins: ['react-hot-loader/babel']
                     }
                 }

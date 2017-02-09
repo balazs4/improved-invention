@@ -2,17 +2,21 @@ import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
-import App from './App';
 
-const _render = MyApp => {
+
+const _render = () => {
+    const App = require('./App').default;
     render(
         <AppContainer>
-            <MyApp />
+            <App />
         </AppContainer>,
         document.getElementById('app')
     )
 }
 
-_render(App);
+_render();
 
-if (module.hot) module.hot.accept('./App', () => { _render(App); })
+if (module.hot){
+    module.hot.accept();
+    module.hot.accept('./App', _render);
+}
