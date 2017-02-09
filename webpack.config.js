@@ -7,8 +7,11 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
+
+const mode = process.env.NODE_ENV || 'development'
+const {name} = require('./package.json');
+
 const app = {
-    entry: [resolve(__dirname, 'src', 'index.js')],
     output: {
         path: resolve(__dirname, 'dist')
     },
@@ -16,11 +19,13 @@ const app = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
+                include: [
+                    resolve(__dirname, 'src')
+                ],
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: [['latest', { modules: false }],'react'],
+                        presets: [['latest', { modules: false }], 'react'],
                         plugins: ['react-hot-loader/babel']
                     }
                 }
@@ -36,17 +41,18 @@ const app = {
         new HtmlWebpackPlugin({
             inject: 'body',
             template: resolve(__dirname, 'src', 'index.html'),
-            title: require('./package.json').name,
+            title: name,
         }),
     ]
 }
 
-const mode = {
+const modes = {
     development: {
         entry: [
             'react-hot-loader/patch',
             'webpack-dev-server/client?http://localhost:3000',
-            'webpack/hot/only-dev-server'
+            'webpack/hot/only-dev-server',
+            resolve(__dirname, 'src', 'index-development.js')
         ],
         output: {
             filename: '[name].js'
@@ -65,11 +71,28 @@ const mode = {
         }
     },
     production: {
+        entry: {
+            [name]: resolve(__dirname, 'src', 'index-production.js')
+        },
         output: {
             filename: '[name].[hash].js'
         },
         plugins: [
-            new FaviconsWebpackPlugin(resolve(__dirname, 'src', 'logo.png')),
+            new FaviconsWebpackPlugin({
+                logo: resolve(__dirname, 'src', 'logo.png'),
+                icons: {
+                    android: false,
+                    appleIcon: false,
+                    appleStartup: false,
+                    coast: false,
+                    favicons: true,
+                    firefox: false,
+                    opengraph: false,
+                    twitter: false,
+                    yandex: false,
+                    windows: false
+                }
+            }),
             new webpack.DefinePlugin({
                 'process.env': {
                     'NODE_ENV': JSON.stringify('production')
@@ -103,4 +126,4 @@ const mode = {
     }
 }
 
-module.exports = merge.smart(mode[process.env.NODE_ENV || 'development'], app);
+module.exports = merge.smart(modes[mode], app);
