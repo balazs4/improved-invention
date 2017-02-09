@@ -17,12 +17,11 @@ const app = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
                         presets: [['latest', { modules: false }]],
-                        plugins: [['transform-react-jsx', { pragma: 'h' }]]
+                        plugins: ['inferno']
                     }
                 }
             }
@@ -77,20 +76,7 @@ const mode = {
             }),
             new webpack.optimize.AggressiveMergingPlugin(),
             new webpack.optimize.OccurrenceOrderPlugin(),
-            new webpack.optimize.UglifyJsPlugin({
-                mangle: true,
-                compress: {
-                    warnings: false,
-                    pure_getters: true,
-                    unsafe: true,
-                    unsafe_comps: true,
-                    screw_ie8: true
-                },
-                output: {
-                    comments: false,
-                },
-                exclude: [/\.min\.js$/gi] // skip pre-minified libs
-            }),
+            new UglifyjsWebpackPlugin(),
             new CompressionWebpackPlugin({
                 asset: "[path].gz[query]",
                 algorithm: "gzip",

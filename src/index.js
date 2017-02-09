@@ -1,14 +1,14 @@
-import { h, render } from 'preact';
+import Inferno from 'inferno';
 
-let root;
 const load = () => {
     const App = require('./App').default;
-    root = render(<App />, document.body, root);
+    Inferno.render(<App />, document.getElementById('app'));
 }
 
-load();
 if (module.hot) {
-    require('preact/devtools');
+    require('inferno-devtools');
     module.hot.accept();
     module.hot.accept('./App', load)
 }
+
+load();

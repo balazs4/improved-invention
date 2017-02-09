@@ -1,13 +1,2 @@
-import { h, Component } from 'preact';
-
-class App extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Hello World!!! preact(native)...</h1>
-            </div>
-        );
-    }
-}
-
-export default App;
+import Inferno from 'inferno';
+export default () => (<h1>Hello from inferno (native)</h1>)
